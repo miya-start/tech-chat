@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#8400ff" />
+    <meta name="shortcut icon" content="res/icon_128.png" />
+    <script>
+      const roomName = "<%= roomName %>";
+    </script>
+    <title>now on <%= roomName %></title>
+    <link rel="apple-touch-icon" href="res/icon_512.png" />
+    <meta name="apple-mobile-web-app-status-bar" content="rgb(89, 255, 193)" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <script defer src="./socket.io/socket.io.js"></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <div id="message-container"></div>
+    <form id="send-container">
+      <input type="text" id="message-input" autocomplete="off" />
+      <button type="submit" id="send-btn" class="material-icons">send</button>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+{
+  "name": "now.",
+  "short_name": "now.",
+  "theme_color": "rgb(89, 255, 193)",
+  "background_color": "rgb(89, 255, 193)",
+  "display": "standalone",
+  "Scope": "/",
+  "start_url": "index.html",
+  "icons": [
+    {
+      "src": "res/icon_144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+
+    {
+      "src": "res/icon_192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+
+    {
+      "src": "res/icon_512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "res/icon_maskable.png",
+      "sizes": "787x787",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
