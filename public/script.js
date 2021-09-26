@@ -38,7 +38,7 @@ socket.on("room-created", (room) => {
   <div class="room-item">
   <p class="room-label">${room}</p>
   <a class="btn" href="/${room} "
-    >Join <span class="material-icons">chevron_right</span></a
+    >参加する <span class="material-icons">chevron_right</span></a
   >
   </div>
   `;
