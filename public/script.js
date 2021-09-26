@@ -5,8 +5,7 @@ const msgContainer = document.querySelector("#message-container");
 const roomContainer = document.querySelector("#room-container");
 
 if (msgForm != null) {
-  const name = prompt(`Welcome to now
-Enter your name`);
+  const name = prompt(`名前を入力してください`);
   AppendMessage(`あなたは ${name} として参加しました。`);
   socket.emit("new-user", roomName, name);
 
@@ -18,7 +17,7 @@ Enter your name`);
   msgForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const message = msgInput.value;
-    var msg = AppendMessage(`You: ${message}`);
+    var msg = AppendMessage(`あなた: ${message}`);
     socket.emit("send-chat-message", roomName, message);
     msgInput.value = "";
   });
@@ -48,13 +47,13 @@ socket.on("room-created", (room) => {
 
 socket.on("user-connected", (data) => {
   console.log("New User: " + data);
-  AppendMessage(`${data} joined`);
-  CreateToast(`${data} joined`);
+  AppendMessage(`${data} が参加しました`);
+  CreateToast(`${data} が参加しました`);
 });
 
 socket.on("user-disconnected", (data) => {
-  console.log(data + " left");
-  AppendMessageFromSender(`${data} left`);
+  console.log(data + " が退出しました");
+  AppendMessageFromSender(`${data} が退出しました`);
 });
 
 function AppendMessage(message) {
