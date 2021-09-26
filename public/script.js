@@ -7,7 +7,7 @@ const roomContainer = document.querySelector("#room-container");
 if (msgForm != null) {
   const name = prompt(`Welcome to now
 Enter your name`);
-  AppendMessage(`You joined as ${name}`);
+  AppendMessage(`あなたは ${name} として参加しました。`);
   socket.emit("new-user", roomName, name);
 
   socket.on("chat-message", (data) => {
