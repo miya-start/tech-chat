@@ -23,15 +23,6 @@ if (msgForm != null) {
   })
 }
 
-/*
-      <div>
-        <p class="room-label"><%= room %></p>
-        <a class="btn" href="/<%= room %> "
-          >Join <span class="material-icons">chevron_right</span></a
-        >
-      </div>
-*/
-
 socket.on('room-created', (room) => {
   const roomDiv = document.createElement('div')
   roomDiv.innerHTML = `
