@@ -17,7 +17,7 @@ if (msgForm != null) {
   msgForm.addEventListener('submit', (event) => {
     event.preventDefault()
     const message = msgInput.value
-    AppendMessage(`あなた: ${message}`)
+    AppendMessage(`${name}: ${message}`)
     socket.emit('send-chat-message', roomName, message)
     msgInput.value = ''
   })
@@ -39,7 +39,7 @@ socket.on('room-created', (room) => {
 socket.on('user-connected', (data) => {
   console.log('New User: ' + data)
   AppendMessage(`${data} が参加しました`)
-  CreateToast(`${data} が参加しました`)
+  // CreateToast(`${data} が参加しました`)
 })
 
 socket.on('user-disconnected', (data) => {
