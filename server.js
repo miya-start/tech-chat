@@ -1,61 +1,73 @@
 const express = require('express')
+const cookieParser = require('cookie-parser')
+const sessions = require('express-session')
+const { log } = require('console')
 const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
+
+const ONE_DAY = 1000 * 60 * 60 * 24
+app.use(
+  sessions({
+    secret: 'thisismysecrctekeyfhrgfgrfrty84fwir767',
+    saveUninitialized: true,
+    cookie: { maxAge: ONE_DAY },
+    resave: false,
+  })
+)
 
 app.set('views', './views')
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 
-const rooms = {}
+const ROOM_NAME = 'TECHチャットの部屋'
+const namesMap = new Map()
+const sidsMap = new Map()
 
 app.get('/', (req, res) => {
-  res.render('index', { rooms: rooms })
+  const username = req.session.username
+  if (!username) return res.render('index')
+  if (!namesMap.has(username)) {
+    req.session.destroy()
+    return res.render('index')
+  }
+  res.redirect('room')
 })
 
-app.post('/room', (req, res) => {
-  if (rooms[req.body.room] != null) {
-    return res.redirect('/')
-  }
-  rooms[req.body.room] = { users: {} }
-  res.redirect(req.body.room)
-  // Send message that new room was created
-  io.emit('room-created', req.body.room)
+app.post('/user', (req, res) => {
+  const username = req.body.username
+  if (!username) return res.send('ユーザー名が必要です') // TODO: 重複チェック
+  req.session.username = req.body.username
+  res.redirect('room')
 })
 
-app.get('/:room', (req, res) => {
-  if (rooms[req.params.room] == null) {
-    return res.redirect('/')
-  }
-  res.render('room', { roomName: req.params.room })
+app.get('/room', (req, res) => {
+  if (!req.session.username) return res.redirect('/')
+  res.render('room', { username: req.session.username })
 })
 
 server.listen(process.env.PORT || 3000)
 
 io.on('connection', (socket) => {
-  socket.on('new-user', (room, name) => {
-    socket.join(room)
-    rooms[room].users[socket.id] = name
-    socket.to(room).emit('user-connected', name)
+  socket.on('new-user', (username) => {
+    socket.join(ROOM_NAME)
+    namesMap.set(username, socket.id)
+    sidsMap.set(socket.id, username)
+    socket.to(ROOM_NAME).emit('user-connected', username)
   })
-  socket.on('send-chat-message', (room, message) => {
-    socket.to(room).emit('chat-message', {
+
+  socket.on('send-chat-message', (message) => {
+    socket.to(ROOM_NAME).emit('chat-message', {
       message: message,
-      name: rooms[room].users[socket.id],
+      name: sidsMap.get(socket.id),
     })
   })
-  socket.on('disconnect', () => {
-    getUserRooms(socket).forEach((room) => {
-      socket.to(room).emit('user-disconnected', rooms[room].users[socket.id])
-      delete rooms[room].users[socket.id]
-    })
+
+  socket.on('logout', (username) => {
+    socket.to(ROOM_NAME).emit('user-disconnected', sidsMap.get(socket.id))
+    namesMap.delete(username)
+    sidsMap.delete(socket.id)
   })
 })
-
-function getUserRooms(socket) {
-  return Object.entries(rooms).reduce((roomNames, [roomName, room]) => {
-    if (room.users[socket.id] != null) roomNames.push(roomName)
-    return roomNames
-  }, [])
-}

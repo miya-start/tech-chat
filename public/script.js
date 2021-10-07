@@ -3,11 +3,11 @@ const msgForm = document.querySelector('#send-container')
 const msgInput = document.querySelector('#message-input')
 const msgContainer = document.querySelector('#message-container')
 const roomContainer = document.querySelector('#room-container')
+const logout = document.getElementById('logout')
 
 if (msgForm != null) {
-  const name = prompt(`名前を入力してください`)
-  AppendMessage(`あなたは ${name} として参加しました。`)
-  socket.emit('new-user', roomName, name)
+  AppendMessage(`あなたは ${username} として参加しました。`)
+  socket.emit('new-user', username)
 
   socket.on('chat-message', (data) => {
     console.log(data)
@@ -17,24 +17,16 @@ if (msgForm != null) {
   msgForm.addEventListener('submit', (event) => {
     event.preventDefault()
     const message = msgInput.value
-    AppendMessage(`${name}: ${message}`)
-    socket.emit('send-chat-message', roomName, message)
+    AppendMessage(`${username}: ${message}`)
+    socket.emit('send-chat-message', message)
     msgInput.value = ''
   })
-}
 
-socket.on('room-created', (room) => {
-  const roomDiv = document.createElement('div')
-  roomDiv.innerHTML = `
-  <div class="room-item">
-  <p class="room-label">${room}</p>
-  <a class="btn" href="/${room} "
-    >参加する <span class="material-icons">chevron_right</span></a
-  >
-  </div>
-  `
-  roomContainer.append(roomDiv)
-})
+  logout.addEventListener('click', () => {
+    socket.emit('logout', username)
+    window.location.href = './'
+  })
+}
 
 socket.on('user-connected', (data) => {
   console.log('New User: ' + data)
