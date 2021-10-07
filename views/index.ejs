@@ -19,17 +19,18 @@
     </nav>
     <div id="room-container">
       <p class="text">
-        <a class="btn" href="#new-room-modal" style="float: right"
-          ><span class="material-icons">add_circle_outline</span></a
-        >
+        <a class="btn" href="#new-room-modal" style="float: right">
+          <span class="material-icons">add_circle_outline</span>
+        </a>
         <span style="float: left">参加できるルーム:</span>
       </p>
       <% Object.keys(rooms).forEach(room => { %>
       <div class="room-item">
         <p class="room-label"><%= room %></p>
-        <a class="btn" href="/<%= room %> "
-          >参加する <span class="material-icons">chevron_right</span></a
-        >
+        <a class="btn" href="/<%= room %> ">
+          参加する
+          <span class="material-icons">chevron_right</span>
+        </a>
       </div>
       <% }); %>
       <div class="modal-overlay" id="new-room-modal">
@@ -45,7 +46,8 @@
               autocomplete="off"
               autofocus
               required
-            /><button class="btn" type="submit">Create</button>
+            />
+            <button class="btn" type="submit">Create</button>
           </form>
         </div>
       </div>
