@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#131313" />
-    <script>
-      const username = "<%= username %>";
-    </script>
-    <title>TECHチャットの部屋</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <script defer src="./socket.io/socket.io.js"></script>
-    <script defer src="script.js"></script>
-  </head>
-  <body>
-    <button id="logout">ログアウト</button>
-    <div id="message-container"></div>
-    <form id="send-container">
-      <input type="text" id="message-input" autocomplete="off" />
-      <button type="submit" id="send-btn" class="material-icons">send</button>
-    </form>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#131313" />
+  <script>
+    const username = "<%= username %>";
+  </script>
+  <title>TECHチャットの部屋</title>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <script defer src="./socket.io/socket.io.js"></script>
+  <script defer src="script.js"></script>
+</head>
+
+<body>
+  <div class='flex flex-col items-center'>
+    <div class='flex justify-end w-full'><button id="logout">ログアウト</button></div>
+    <div class="flex flex-col w-10/12" id="message-container"></div>
+  </div>
+
+  <form id="send-container">
+    <input type="text" id="message-input" autocomplete="off" />
+    <button type="submit" id="send-btn" class="material-icons">send</button>
+  </form>
+</body>
+
 </html>

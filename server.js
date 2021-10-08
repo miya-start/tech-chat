@@ -6,12 +6,11 @@ const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 
-const ONE_DAY = 1000 * 60 * 60 * 24
 app.use(
   sessions({
     secret: 'thisismysecrctekeyfhrgfgrfrty84fwir767',
     saveUninitialized: true,
-    cookie: { maxAge: ONE_DAY },
+    cookie: { maxAge: 1000 * 60 * 60 * 24 },
     resave: false,
   })
 )
@@ -38,8 +37,9 @@ app.get('/', (req, res) => {
 
 app.post('/user', (req, res) => {
   const username = req.body.username
-  if (namesMap.has(username))
+  if (namesMap.has(username)) {
     return res.send('すでに使われている名前です。別の名前を入力してください。')
+  }
   req.session.username = req.body.username
   res.redirect('room')
 })
