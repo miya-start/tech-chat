@@ -10,7 +10,6 @@ if (msgForm != null) {
   socket.emit('new-user', username)
 
   socket.on('chat-message', (data) => {
-    console.log(data)
     AppendMessage(`${data.name}: ${data.message}`)
   })
 
@@ -31,7 +30,6 @@ if (msgForm != null) {
 socket.on('user-connected', (data) => {
   console.log('New User: ' + data)
   AppendMessage(`${data} が参加しました`)
-  // CreateToast(`${data} が参加しました`)
 })
 
 socket.on('user-disconnected', (data) => {

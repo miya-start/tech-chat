@@ -38,7 +38,8 @@ app.get('/', (req, res) => {
 
 app.post('/user', (req, res) => {
   const username = req.body.username
-  if (!username) return res.send('ユーザー名が必要です') // TODO: 重複チェック
+  if (namesMap.has(username))
+    return res.send('すでに使われている名前です。別の名前を入力してください。')
   req.session.username = req.body.username
   res.redirect('room')
 })
