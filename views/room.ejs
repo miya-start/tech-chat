@@ -17,15 +17,28 @@
 </head>
 
 <body>
-  <div class='flex flex-col items-center'>
-    <div class='flex justify-end w-full'><button id="logout">ログアウト</button></div>
-    <div class="flex flex-col w-10/12" id="message-container"></div>
-  </div>
+  <div class='flex flex-col items-center h-screen min-h-screen"'>
+    <div class='flex-none flex justify-end w-10/12'>
+      <button
+        class="mt-4 py-2 px-4 text-gray-700 font-bold bg-rose-600 rounded opacity-80 transition hover:text-gray-800 hover:opacity-100"
+        id="logout">
+        ログアウト
+      </button>
+    </div>
+    <div class='flex-1 flex flex-col w-10/12 overflow-y-auto'>
+      <main class="flex-1 overflow-y-auto" id="message-container"></main>
 
-  <form id="send-container">
-    <input type="text" id="message-input" autocomplete="off" />
-    <button type="submit" id="send-btn" class="material-icons">send</button>
-  </form>
+      <div class='flex-none flex justify-center mb-3'>
+        <form class="flex max-w-5xl text-xl" id="send-container">
+          <input
+            class="h-12 w-full px-7 text-white bg-gray-600 border-gray-700 border-2 border-r-0 outline-none transition"
+            id="message-input" type="text" required autocomplete="off" aria-label="送信メッセージ" />
+          <button class="material-icons w-24 h-12 text-black bg-rose-600 border-rose-600 border-2" id="send-btn"
+            type="submit">send</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

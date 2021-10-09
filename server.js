@@ -1,7 +1,6 @@
 const express = require('express')
 const cookieParser = require('cookie-parser')
 const sessions = require('express-session')
-const { log } = require('console')
 const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)

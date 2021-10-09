@@ -2,8 +2,16 @@ const socket = io(location.host)
 const msgForm = document.querySelector('#send-container')
 const msgInput = document.querySelector('#message-input')
 const msgContainer = document.querySelector('#message-container')
-const roomContainer = document.querySelector('#room-container')
 const logout = document.getElementById('logout')
+
+function AppendMessage(message) {
+  const msgElem = document.createElement('div')
+  const span = document.createElement('span')
+  msgElem.classList.add('message')
+  msgElem.appendChild(span).innerText = message
+  msgContainer.append(msgElem)
+  msgContainer.scrollTop = msgContainer.scrollHeight
+}
 
 if (msgForm != null) {
   AppendMessage(`あなたは ${username} として参加しました。`)
@@ -28,24 +36,9 @@ if (msgForm != null) {
 }
 
 socket.on('user-connected', (data) => {
-  console.log('New User: ' + data)
   AppendMessage(`${data} が参加しました`)
 })
 
 socket.on('user-disconnected', (data) => {
-  console.log(data + ' が退出しました')
-  AppendMessageFromSender(`${data} が退出しました`)
+  AppendMessage(`${data} が退出しました`)
 })
-
-function AppendMessage(message) {
-  const msgElem = document.createElement('div')
-  msgElem.innerText = message
-  msgContainer.append(msgElem)
-}
-
-function AppendMessageFromSender(message) {
-  const msgElem = document.createElement('div')
-  msgElem.classList.add('message')
-  msgElem.innerText = message
-  msgContainer.append(msgElem)
-}
