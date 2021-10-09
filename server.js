@@ -21,13 +21,16 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 const ROOM_NAME = 'TECHチャットの部屋'
-const namesMap = new Map()
-const sidsMap = new Map()
+const name_sid = new Map()
+const sid_name = new Map()
+const pass_name = new Map()
 
 app.get('/', (req, res) => {
   const username = req.session.username
+  const sid = name_sid.get(username)
+
   if (!username) return res.render('index')
-  if (!namesMap.has(username)) {
+  if (!sid_name.has(sid)) {
     req.session.destroy()
     return res.render('index')
   }
@@ -36,10 +39,12 @@ app.get('/', (req, res) => {
 
 app.post('/user', (req, res) => {
   const username = req.body.username
-  if (namesMap.has(username)) {
-    return res.send('すでに使われている名前です。別の名前を入力してください。')
+  const password = req.body.password
+  if (name_sid.has(username) && pass_name.get(username) !== password) {
+    return res.send('ユーザー名かパスワードに誤りがあります。')
   }
-  req.session.username = req.body.username
+  pass_name.set(username, password)
+  req.session.username = username
   res.redirect('room')
 })
 
@@ -52,22 +57,24 @@ server.listen(process.env.PORT || 3000)
 
 io.on('connection', (socket) => {
   socket.on('new-user', (username) => {
+    const sid = name_sid.get(username)
+
     socket.join(ROOM_NAME)
-    namesMap.set(username, socket.id)
-    sidsMap.set(socket.id, username)
+    name_sid.set(username, socket.id)
+    sid_name.set(socket.id, username)
+    if (name_sid.has(username) && sid_name.has(sid)) return
     socket.to(ROOM_NAME).emit('user-connected', username)
   })
 
   socket.on('send-chat-message', (message) => {
     socket.to(ROOM_NAME).emit('chat-message', {
       message: message,
-      name: sidsMap.get(socket.id),
+      name: sid_name.get(socket.id),
     })
   })
 
   socket.on('logout', (username) => {
-    socket.to(ROOM_NAME).emit('user-disconnected', sidsMap.get(socket.id))
-    namesMap.delete(username)
-    sidsMap.delete(socket.id)
+    socket.to(ROOM_NAME).emit('user-disconnected', sid_name.get(socket.id))
+    sid_name.delete(socket.id)
   })
 })

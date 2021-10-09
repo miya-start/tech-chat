@@ -18,8 +18,10 @@
   </nav>
   <main class="flex justify-center w-full mt-20" id="room-container">
     <form action="/user" method="post">
-      <input class="h-10 text-gray-900 text-center" name="username" type="text" placeholder="ユーザー名" autocomplete="off"
-        required />
+      <input class="block h-10 text-gray-900 text-center" name="username" type="text" placeholder="ユーザー名"
+        autocomplete="off" required />
+      <input class="block h-10 mt-6 text-gray-900 text-center" name="password" type="password" placeholder="パスワード"
+        autocomplete="off" required />
       <button type="sumbit" class="block w-full py-2 mt-10 font-semibold bg-rose-600 rounded">
         ログイン
       </button>

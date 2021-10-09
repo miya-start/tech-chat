@@ -40,5 +40,6 @@ socket.on('user-connected', (data) => {
 })
 
 socket.on('user-disconnected', (data) => {
+  if (username === data) return
   AppendMessage(`${data} が退出しました`)
 })
