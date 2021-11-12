@@ -1,56 +1,32 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#131313" />
-    <title>TECHチャット</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <script defer src="./socket.io/socket.io.js"></script>
-    <script defer src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <h1>TECHチャット</h1>
-    </nav>
-    <div id="room-container">
-      <p class="text">
-        <a class="btn" href="#new-room-modal" style="float: right">
-          <span class="material-icons">add_circle_outline</span>
-        </a>
-        <span style="float: left">参加できるルーム:</span>
-      </p>
-      <% Object.keys(rooms).forEach(room => { %>
-      <div class="room-item">
-        <p class="room-label"><%= room %></p>
-        <a class="btn" href="/<%= room %> ">
-          参加する
-          <span class="material-icons">chevron_right</span>
-        </a>
-      </div>
-      <% }); %>
-      <div class="modal-overlay" id="new-room-modal">
-        <div class="modal">
-          <a href="javascript.void(0)" class="modal-close">&times;</a>
-          <p class="room-label">Create a new room:</p>
-          <form action="/room" method="POST">
-            <input
-              type="text"
-              name="room"
-              id="input-create-room"
-              placeholder="Enter room name"
-              autocomplete="off"
-              autofocus
-              required
-            />
-            <button class="btn" type="submit">Create</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#131313" />
+  <title>TECHチャット</title>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+  <script defer src="./socket.io/socket.io.js"></script>
+  <script defer src="script.js"></script>
+</head>
+
+<body>
+  <nav class="flex justify-center items-center h-20 bg-green-300">
+    <h1 class="text-5xl">TECHチャット</h1>
+  </nav>
+  <main class="flex justify-center w-full mt-20" id="room-container">
+    <form action="/user" method="post">
+      <input class="block h-10 text-gray-900 text-center" name="username" type="text" placeholder="ユーザー名"
+        autocomplete="off" required />
+      <input class="block h-10 mt-6 text-gray-900 text-center" name="password" type="password" placeholder="パスワード"
+        autocomplete="off" required />
+      <button type="sumbit" class="block w-full py-2 mt-10 font-semibold bg-rose-600 rounded">
+        ログイン
+      </button>
+    </form>
+  </main>
+</body>
+
 </html>

@@ -1,26 +1,44 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#131313" />
-    <script>
-      const roomName = "<%= roomName %>";
-    </script>
-    <title>TECHチャットの <%= roomName %></title>
-    <link rel="stylesheet" href="styles.css" />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <script defer src="./socket.io/socket.io.js"></script>
-    <script defer src="script.js"></script>
-  </head>
-  <body>
-    <div id="message-container"></div>
-    <form id="send-container">
-      <input type="text" id="message-input" autocomplete="off" />
-      <button type="submit" id="send-btn" class="material-icons">send</button>
-    </form>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#131313" />
+  <script>
+    const username = "<%= username %>";
+  </script>
+  <title>TECHチャットの部屋</title>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <script defer src="./socket.io/socket.io.js"></script>
+  <script defer src="script.js"></script>
+</head>
+
+<body>
+  <div class='flex flex-col items-center h-screen min-h-screen"'>
+    <div class='flex-none flex justify-end w-10/12'>
+      <button
+        class="mt-4 py-2 px-4 text-gray-700 font-bold bg-rose-600 rounded opacity-80 transition hover:text-gray-800 hover:opacity-100"
+        id="logout">
+        ログアウト
+      </button>
+    </div>
+    <div class='flex-1 flex flex-col w-10/12 overflow-y-auto'>
+      <main class="flex-1 overflow-y-auto" id="message-container"></main>
+
+      <div class='flex-none flex justify-center mb-3'>
+        <form class="flex max-w-5xl text-xl" id="send-container">
+          <input
+            class="h-12 w-full px-7 text-white bg-gray-600 border-gray-700 border-2 border-r-0 outline-none transition"
+            id="message-input" type="text" required autocomplete="off" aria-label="送信メッセージ" />
+          <button class="material-icons w-24 h-12 text-black bg-rose-600 border-rose-600 border-2" id="send-btn"
+            type="submit">send</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+
 </html>

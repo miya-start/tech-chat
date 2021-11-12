@@ -1,15 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-* {
-  box-sizing: border-box;
+:root {
+  --rose-600: #e11d48;
+}
+
+.bg-rose-600 {
+  background-color: var(--rose-600);
+}
+.border-rose-600 {
+  border-color: var(--rose-600);
 }
 
 body {
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN',
+    'Hiragino Sans', Meiryo, sans-serif;
   font-size: 1.2rem;
   background: linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
     linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
@@ -26,128 +30,15 @@ body {
       #242424
     );
   background-color: #131313;
-  color: white;
   background-size: 20px 20px;
 }
 
-p,
-ul,
-li,
-a {
-  line-height: 30px;
-}
-
-.modal-overlay {
-  position: fixed;
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(20px);
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1010;
-  visibility: hidden;
-  opacity: 1;
-  pointer-events: none;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-  height: 0;
-}
-.modal-overlay:target {
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
-  height: 100%;
-}
-.modal-overlay > .modal {
-  width: 500px;
-  max-width: 90%;
-  height: auto;
-  max-height: 60%;
-  overflow-y: auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  padding: 1rem;
-  background: rgb(105, 105, 105);
-  color: white;
-  border-radius: 5px;
-}
-
-.modal-overlay h1 {
-  font-size: 2rem;
-  margin: auto auto 1rem 1rem;
-}
-
-.modal p,
-.modal .text {
-  margin: auto;
-}
-
-.modal-close {
-  color: #aaa;
-  font-size: 2rem;
-  position: fixed;
-  right: 0;
-  text-align: center;
-  top: 1rem;
-  margin-right: 1rem;
-  text-decoration: none;
-  cursor: pointer;
-}
-.modal-close:hover {
-  color: black;
-  text-decoration: none;
-}
-
-.plus-icon {
-  border-radius: 50px;
-  width: 20px;
-  height: 20px;
-  padding: 0;
-  margin: zero;
-}
-
-a {
-  color: rgb(167, 255, 233);
-  text-decoration: underline transparent;
-  transition: all 0.2s ease;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
 nav {
-  height: 80px;
-  position: absolute;
-  background-color: rgb(89, 255, 193);
-  color: rgb(37, 37, 37);
-  font-family: "Ubuntu", sans-serif;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  text-align: center;
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
+  font-family: 'Ubuntu', sans-serif;
 }
 
-nav h1 {
-  font-size: 65px;
-  margin: 0 0 20px;
-  padding: 0;
-}
-
-#message-container {
-  width: 80%;
-  max-width: 1200px;
-}
-
-#message-container div {
+#message-container span {
+  display: inline-block;
   background-color: rgb(105, 105, 105);
   color: white;
   padding: 10px 20px;
@@ -157,152 +48,18 @@ nav h1 {
 }
 
 #send-container {
-  display: inline-flex;
-  justify-content: stretch;
-  position: fixed;
-  bottom: 10px;
-  left: 30%;
-  right: 30%;
-  width: 40%;
-  max-width: 1200px;
-}
-@media screen and (max-width: 1024px) {
-  #send-container {
-    left: 10%;
-    width: 80%;
-  }
+  left: 10%;
+  width: 80%;
 }
 
-#room-container {
-  margin-top: 80px;
-  width: 100%;
-}
-
-#room-container p.text {
-  color: white;
-  margin: 20px;
-}
-
-#room-container .room-item {
-  background-color: rgb(80, 80, 80);
-  width: 95%;
-  margin: auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  padding: 0;
-  font-size: 20px;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.room-label {
-  padding: 20px;
-  margin: 0;
-}
-
-.automargin-section {
-  margin: 20px;
-  color: var(--text-color);
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  line-height: var(--line-height);
-}
-
-#input-create-room {
-  appearance: none;
-  -webkit-appearance: none;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  margin: 20px;
-  transition: all 0.2s ease;
-  font-size: 1.2rem;
-  padding: 10px;
-  border-radius: 5px 5px 0 0;
-  border-bottom: 1px solid white;
-  background-color: rgb(105, 105, 105);
-  color: white;
-  caret-color: white;
-  transition: all 0.2s ease;
-}
-
-#input-create-room:focus {
-  border-bottom: 1px solid rgb(89, 255, 193);
-}
-
-.btn {
-  background-color: rgb(89, 255, 193);
-  color: rgb(37, 37, 37);
-  text-decoration: none;
-  text-align: center;
-  padding: 10px 20px;
-  margin: 20px;
-  border-radius: 5px;
-  border: 0;
-  font-size: 1.2rem;
-  font-family: "Roboto", sans-serif;
-  cursor: pointer;
-}
-
-@media screen and (max-width: 768px) {
-  #room-container .form-container {
-    flex-direction: column;
-  }
-  .automargin-section {
-    max-width: 60vw;
-    margin: auto;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  #room-container form {
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-span.material-icons {
-  vertical-align: middle;
-  position: relative;
-  top: -2px;
-  margin: 0;
-  padding: 0;
-}
-
-#message-input,
-#send-btn {
-  appearance: none;
-  -webkit-appearance: none;
-  height: 50px;
-  width: 100%;
-  transition: all 0.2s ease;
-  font-size: 1.2rem;
-}
 #message-input {
   border-radius: 50px 0 0 50px;
-  border: 2px solid rgba(27, 27, 27, 0.2);
-  background-color: rgb(105, 105, 105);
-  color: white;
-  caret-color: white;
-  padding: 0 30px;
-  border-right: none;
 }
+
 #message-input:focus {
-  border-color: rgb(0, 119, 134);
-  outline: none;
+  border-color: #e36681;
 }
 #send-btn {
   flex-shrink: 5;
-  cursor: pointer;
-  background-color: rgb(89, 255, 193);
-  color: rgb(37, 37, 37);
-  font-weight: bold;
   border-radius: 0 50px 50px 0;
-  border: 2px solid rgb(89, 255, 193);
-}
-#send-btn:active {
-  background-color: rgb(80, 160, 0);
 }
