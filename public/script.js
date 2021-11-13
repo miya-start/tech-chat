@@ -2,29 +2,43 @@ const socket = io(location.host)
 const msgForm = document.querySelector('#send-container')
 const msgInput = document.querySelector('#message-input')
 const msgContainer = document.querySelector('#message-container')
+const containerWrapper = document.querySelector('#container-wrapper')
 const logout = document.getElementById('logout')
 
-function AppendMessage(message) {
+function appendMessage(message, userType) {
   const msgElem = document.createElement('div')
   const span = document.createElement('span')
-  msgElem.classList.add('message')
+  msgElem.classList.add('max-w-lg')
+  if (userType === 'myself') {
+    msgElem.classList.add('place-self-end')
+  } else if (userType === 'other') {
+    msgElem.classList.add('place-self-start')
+  }
   msgElem.appendChild(span).innerText = message
   msgContainer.append(msgElem)
-  msgContainer.scrollTop = msgContainer.scrollHeight
+  containerWrapper.scrollTop = containerWrapper.scrollHeight
+}
+
+function appendMyMessage(message) {
+  appendMessage(message, 'myself')
+}
+
+function appendOthersMessage(message) {
+  appendMessage(message, 'other')
 }
 
 if (msgForm != null) {
-  AppendMessage(`あなたは ${username} として参加しました。`)
+  appendMyMessage(`あなたは ${username} として参加しました。`)
   socket.emit('new-user', username)
 
   socket.on('chat-message', (data) => {
-    AppendMessage(`${data.name}: ${data.message}`)
+    appendOthersMessage(`${data.name}: ${data.message}`)
   })
 
   msgForm.addEventListener('submit', (event) => {
     event.preventDefault()
     const message = msgInput.value
-    AppendMessage(`${username}: ${message}`)
+    appendMyMessage(`${message}`)
     socket.emit('send-chat-message', message)
     msgInput.value = ''
   })
@@ -36,10 +50,10 @@ if (msgForm != null) {
 }
 
 socket.on('user-connected', (data) => {
-  AppendMessage(`${data} が参加しました`)
+  appendOthersMessage(`${data} が参加しました`)
 })
 
 socket.on('user-disconnected', (data) => {
   if (username === data) return
-  AppendMessage(`${data} が退出しました`)
+  appendOthersMessage(`${data} が退出しました`)
 })
