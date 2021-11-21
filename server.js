@@ -68,12 +68,12 @@ io.on('connection', (socket) => {
 
   socket.on('send-chat-message', (message) => {
     socket.to(ROOM_NAME).emit('chat-message', {
-      message: message,
+      message,
       name: sid_name.get(socket.id),
     })
   })
 
-  socket.on('logout', (username) => {
+  socket.on('logout', () => {
     socket.to(ROOM_NAME).emit('user-disconnected', sid_name.get(socket.id))
     sid_name.delete(socket.id)
   })
