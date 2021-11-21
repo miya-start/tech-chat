@@ -27,33 +27,21 @@ function appendOthersMessage(message) {
   appendMessage(message, 'other')
 }
 
-if (msgForm != null) {
-  appendMyMessage(`あなたは ${username} として参加しました。`)
-  socket.emit('new-user', username)
+appendMyMessage(`TECHチャットに参加しました。`)
+socket.emit('new-user')
 
-  socket.on('chat-message', (data) => {
-    appendOthersMessage(`${data.name}: ${data.message}`)
-  })
-
-  msgForm.addEventListener('submit', (event) => {
-    event.preventDefault()
-    const message = msgInput.value
-    appendMyMessage(`${message}`)
-    socket.emit('send-chat-message', message)
-    msgInput.value = ''
-  })
-
-  logout.addEventListener('click', () => {
-    socket.emit('logout', username)
-    window.location.href = './'
-  })
-}
-
-socket.on('user-connected', (data) => {
-  appendOthersMessage(`${data} が参加しました`)
+socket.on('chat-message', (data) => {
+  appendOthersMessage(data.message)
 })
 
-socket.on('user-disconnected', (data) => {
-  if (username === data) return
-  appendOthersMessage(`${data} が退出しました`)
+msgForm.addEventListener('submit', (event) => {
+  event.preventDefault()
+  const message = msgInput.value
+  appendMyMessage(message)
+  socket.emit('send-chat-message', message)
+  msgInput.value = ''
+})
+
+socket.on('user-connected', () => {
+  appendOthersMessage('新たなユーザーが参加しました')
 })

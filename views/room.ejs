@@ -5,9 +5,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#131313" />
-  <script>
-    const username = "<%= username %>";
-  </script>
   <title>TECHチャットの部屋</title>
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
@@ -17,14 +14,7 @@
 </head>
 
 <body>
-  <div class="flex flex-col items-center gap-6 h-screen min-h-screen">
-    <div class="flex-none flex justify-end w-10/12">
-      <button
-        class="mt-4 py-2 px-4 text-gray-700 font-bold bg-rose-600 rounded opacity-80 transition hover:text-gray-800 hover:opacity-100"
-        id="logout">
-        ログアウト
-      </button>
-    </div>
+  <div class="flex flex-col items-center gap-6 h-screen min-h-screen mt-0.5">
     <div class="flex flex-col flex-1 w-10/12 overflow-y-auto" id="container-wrapper">
       <div class="flex-1">
         <main class="grid grid-cols-1" id="message-container">
