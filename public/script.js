@@ -27,19 +27,19 @@ function appendOthersMessage(message) {
   appendMessage(message, 'other')
 }
 
-appendMyMessage(`TECHチャットに参加しました。`)
-socket.emit('new-user')
-
-socket.on('chat-message', (data) => {
-  appendOthersMessage(data.message)
-})
-
 msgForm.addEventListener('submit', (event) => {
   event.preventDefault()
   const message = msgInput.value
   appendMyMessage(message)
   socket.emit('send-chat-message', message)
   msgInput.value = ''
+})
+
+appendMyMessage('TECHチャットに参加しました。')
+socket.emit('new-user')
+
+socket.on('chat-message', (data) => {
+  appendOthersMessage(data.message)
 })
 
 socket.on('user-connected', () => {
