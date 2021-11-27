@@ -31,17 +31,26 @@ msgForm.addEventListener('submit', (event) => {
   event.preventDefault()
   const message = msgInput.value
   appendMyMessage(message)
-  socket.emit('send-chat-message', message)
+  // TODO⑤: サーバーにイベントを送る。イベントだけでなく、チャットのメッセージも送る
+  // socket.???('send-chat-message', message)
   msgInput.value = ''
 })
 
-appendMyMessage('TECHチャットに参加しました。')
+// TODO①: 自分のブラウザにメッセージを表示する
+// appendMyMessage('TECHチャットに参加しました。')
+
+// サーバーにイベントを送る
 socket.emit('new-user')
 
-socket.on('chat-message', (data) => {
-  appendOthersMessage(data.message)
-})
-
-socket.on('user-connected', () => {
-  appendOthersMessage('新たなユーザーが参加しました')
-})
+// TODO④: サーバーからイベントを受け取る。
+// socket.on('???', () => {
+//   appendOthersMessage('新たなユーザーが参加しました')
+// })
+//
+// TODO⑧: サーバーからイベントを受け取る。イベントだけでなく、チャットメッセージも受け取る
+// socket.on('???', (data) => {
+//   console.log(data.message)
+// })
+//
+// TODO⑨: ブラウザに、サーバーから受け取ったチャットメッセージを表示する
+// ???(data.message)
