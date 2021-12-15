@@ -21,22 +21,22 @@ app.get('/room', (_, res) => {
 server.listen(process.env.PORT || 3000)
 
 io.on('connection', (socket) => {
-  // TODO②: ブラウザからのイベントを受け取る。新たなユーザが入室したことを検知する
+  // TODO3: ブラウザからのイベントを受け取る。新たなユーザが入室したことを検知する
   // socket.on('new-user', () => {
   //   console.log('新たなユーザが入室しました！')
   // })
   //
-  // TODO③: ブラウザにイベントを送る。新たなユーザが入室したことをブラウザに通知する
+  // TODO4: ブラウザにイベントを送る。新たなユーザが入室したことをブラウザに通知する
   // socket.join(ROOM_NAME)
   // socket.to(ROOM_NAME).emit('user-connected')
   //
   //
-  // TODO⑥: ブラウザからのイベントを受け取る。イベントだけでなく、チャットメッセージも受け取る
+  // TODO7: ブラウザからのイベントを受け取る。イベントだけでなく、チャットメッセージも受け取る
   // socket.on('???', (message) => {
   //   console.log(message)
   // })
   //
-  // TODO⑦: ブラウザにイベントを送る。イベントだけでなく、チャットメッセージもブラウザに送る
+  // TODO8: ブラウザにイベントを送る。イベントだけでなく、チャットメッセージもブラウザに送る
   // socket.to(???).emit('chat-message', {
   //   message,
   // })
