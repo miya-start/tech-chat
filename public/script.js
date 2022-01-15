@@ -14,7 +14,7 @@ function appendMessage(message, userType) {
   } else if (userType === 'other') {
     msgElem.classList.add('place-self-start')
   }
-  msgElem.appendChild(span).innerText = message
+  msgElem.appendChild(span).innerHTML = renderHTML(message)
   msgContainer.append(msgElem)
   containerWrapper.scrollTop = containerWrapper.scrollHeight
 }
@@ -55,3 +55,38 @@ socket.on('user-disconnected', (data) => {
   if (username === data) return
   appendOthersMessage(`${data} が退出しました`)
 })
+
+function renderHTML(text) {
+  const rawText = strip(text)
+  const urlRegex =
+    /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
+
+  return rawText.replace(urlRegex, function (url) {
+    if (
+      url.indexOf('.jpg') > 0 ||
+      url.indexOf('.png') > 0 ||
+      url.indexOf('.gif') > 0
+    ) {
+      return '<img src="' + url + '">' + '<br/>'
+    } else {
+      return (
+        '<a class="text-blue-300 visited:text-purple-600 underline" href="' +
+        url +
+        '" target=_blank rel="noopener">' +
+        url +
+        '</a>' +
+        '<br/>'
+      )
+    }
+  })
+}
+
+function strip(html) {
+  const tmp = document.createElement('div')
+  tmp.innerHTML = html
+  const urlRegex =
+    /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
+  return tmp.innerText.replace(urlRegex, function (url) {
+    return '\n' + url
+  })
+}
