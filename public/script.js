@@ -27,7 +27,7 @@ function appendOthersMessage(message) {
   appendMessage(message, 'other')
 }
 
-appendMyMessage(`あなたは ${username} として参加しました。`)
+appendMyMessage(`あなたは ${username} として参加しました`)
 socket.emit('new-user', username)
 
 socket.on('chat-message', (data) => {
@@ -56,37 +56,24 @@ socket.on('user-disconnected', (data) => {
   appendOthersMessage(`${data} が退出しました`)
 })
 
-function renderHTML(text) {
-  const rawText = strip(text)
+function renderHTML(message) {
   const urlRegex =
     /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
+  const strip = (regex, html) => {
+    const tmp = document.createElement('div')
+    tmp.innerHTML = html
+    return tmp.innerText.replace(regex, (url) => '\n' + url)
+  }
 
-  return rawText.replace(urlRegex, function (url) {
+  return strip(urlRegex, message).replace(urlRegex, (url) => {
     if (
       url.indexOf('.jpg') > 0 ||
       url.indexOf('.png') > 0 ||
       url.indexOf('.gif') > 0
     ) {
-      return '<img src="' + url + '">' + '<br/>'
-    } else {
-      return (
-        '<a class="text-blue-300 visited:text-purple-600 underline" href="' +
-        url +
-        '" target=_blank rel="noopener">' +
-        url +
-        '</a>' +
-        '<br/>'
-      )
+      return `<img src="${url}"><br/>`
     }
-  })
-}
 
-function strip(html) {
-  const tmp = document.createElement('div')
-  tmp.innerHTML = html
-  const urlRegex =
-    /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
-  return tmp.innerText.replace(urlRegex, function (url) {
-    return '\n' + url
+    return `<a class="text-blue-300 visited:text-purple-600 underline" href="${url}" target=_blank rel="noopener">${url}</a><br/>`
   })
 }
